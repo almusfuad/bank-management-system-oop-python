@@ -82,3 +82,24 @@ class BankOperation:
                     print(f'Loan of {amount} credited to account {account_num}.')
                 else:
                     print('Minimum Loan amount is 100')
+            else:
+                print('Loan feature is disabled or maximum loan limit exceeded.')
+        else:
+            print('Account does not exist.')
+
+    def transfer_amount(bank_op, sender_acc_num, receiver_acc_num, amount):
+        if sender_acc_num in bank_op.bank.users and receiver_acc_num in bank_op.bank.users:
+            sender = bank_op.bank.users[sender_acc_num]
+            receiver = bank_op.bank.users[receiver_acc_num]
+            if amount > 100 and sender.balance >= amount:
+                sender.balance -= amount
+                receiver.balance += amount
+                sender.transaction_history.append(f'Transfer: -{amount} to {receiver_acc_num}')
+                receiver.transaction_history.append(f'Transfer: +{amount} from {sender_acc_num}')
+                print(f'Transferred {amount} from account {sender_acc_num} to account {receiver_acc_num}')
+            elif amount > 100 and sender.balance < amount:
+                print('Insufficient balance for the transfer')
+            else:
+                print('Minimum amount for transfer is 100')
+        else:
+            print('One or both accounts do not exist.')
