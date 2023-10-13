@@ -40,3 +40,45 @@ class Bank:
 
     def disable_loan_feature(bank):
         bank.loan_enabled = False
+
+class BankOperation:
+    def __init__(bank_op, bank) -> None:
+        bank_op.bank = bank
+
+    def deposit(bank_op, account_num, amount):
+        if account_num in bank_op.bank.users:
+            user = bank_op.bank.users[account_num]
+            if amount > 100:
+                user.balance += amount
+                user.transaction_history.append(f'Deposit: {amount}')
+                print(f'Deposited {amount} into account {account_num}')
+            else:
+                print("Invalid deposit amount")
+        else:
+            print('Account does not exist.')
+
+    def withdraw(bank_op, account_num, amount):
+        if account_num in bank_op.bank.users:
+            user = bank_op.bank.users[account_num]
+            if amount > 100 and user.balance >= amount:
+                user.balance -= amount
+                user.transaction_history.append(f'Withdraw: -{amount}')
+                print(f'withdrawn {amount} from account {account_num}')
+            elif amount > 100 and user.balance < amount:
+                print('Withdrawal amount exceeded.')
+            else:
+                print('Minimum withdrawal amount is 100')
+        else:
+            print('Account does not exist.')
+
+    def take_loan(bank_op, account_num, amount):
+        if account_num in bank_op.bank.users:
+            user = bank_op.bank.users[account_num]
+            if user.loan_count < 3 and bank_op.bank.loan_enabled:
+                if amount > 100:
+                    user.balance += amount
+                    user.transaction_history.append(f'Loan: +{amount}')
+                    user.loan_count += 1
+                    print(f'Loan of {amount} credited to account {account_num}.')
+                else:
+                    print('Minimum Loan amount is 100')
