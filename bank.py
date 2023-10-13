@@ -23,3 +23,20 @@ class Bank:
             print(f'Account {account_num} has been deleted.')
         else:
             print('Account does not exist.')
+
+    def all_users_acc(bank):
+        for acc_num, user in bank.users.items():
+            print(f'Account number: {acc_num}')
+
+    def total_bank_balance(bank):
+        return bank.init_balance
+
+    def total_loan_amount(bank):
+        total_loans = sum(user.balance for user in bank.users.values() if user.balance < 0)
+        return abs(total_loans)
+
+    def enable_loan_feature(bank):
+        bank.loan_enabled = True
+
+    def disable_loan_feature(bank):
+        bank.loan_enabled = False
