@@ -41,6 +41,8 @@ class Bank:
     def disable_loan_feature(bank):
         bank.loan_enabled = False
 
+
+# This class is for banking operation like deposit, withdraw, loaning, transferring
 class BankOperation:
     def __init__(bank_op, bank) -> None:
         bank_op.bank = bank
