@@ -29,6 +29,5 @@ class Admin:
             return True
         return False
 
-    def bankrupt(admin):
-        print('Bankrupt is enabled.')
-        return admin.bank.isBankrupt == True
+    def set_bankrupt(admin):
+        admin.bank.set_bankrupt()

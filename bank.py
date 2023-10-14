@@ -40,10 +40,8 @@ class Bank:
         return bank.balance
 
     def total_loan_amount(bank):
-        total_loans = 0
-        for user in bank.users.values():
-            total_loans += user.loan_balance
-            bank.balance -= user.loan_balnce
+        total_loans = sum(user.loan_balance for user in bank.users.values())
+        bank.balance -= total_loans
         return total_loans
         
 
@@ -57,9 +55,11 @@ class Bank:
         if bank.loan_enabled == False:
             print('Loan features is OFF')
 
-    def __repr__(bank) -> str:
-        if bank.isBankrupt == True:
-            print('Bankrupt is enabled.')
+    def set_bankrupt(bank):
+        bank.isBankrupt = True
+        print('Bankrupt is enabled.')
+
+            
 
 
 # This class is for banking operation like deposit, withdraw, loaning, transferring
@@ -82,16 +82,17 @@ class BankOperation:
     def withdraw(bank_op, account_num, amount):
         if account_num in bank_op.bank.users:
             user = bank_op.bank.users[account_num]
-            if amount > 0 and user.balance >= amount:
-                user.balance -= amount
-                user.transaction_history.append(f'Withdraw: -{amount}')
-                print(f'withdrawn {amount} from account {account_num}')
-            elif amount > 0 and user.balance < amount:
-                print('Withdrawal amount exceeded.')
-            elif amount > 0 and bank_op.bank.isBankrupt:
+            if amount > 0 and bank_op.bank.check_bankrupt():
                 print('The bank is bankrupt')
             else:
-                print('Invalid withdrawal amount.')
+                if amount > 0 and user.balance >= amount:
+                    user.balance -= amount
+                    user.transaction_history.append(f'Withdraw: -{amount}')
+                    print(f'withdrawn {amount} from account {account_num}')
+                elif amount > 0 and user.balance < amount:
+                    print('Withdrawal amount exceeded.')
+                else:
+                    print('Invalid withdrawal amount.')
         else:
             print('Account does not exist.')
 

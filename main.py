@@ -112,7 +112,7 @@ def main():
                     elif loan_op == 2:
                         admin.disable_loan_feature()
                 elif adminChoise == 7:
-                    admin.bankrupt()
+                    admin.set_bankrupt()
                 elif adminChoise == 8:
                     resume = False
 
