@@ -8,4 +8,5 @@ class User:
         user.balance = 0
         user.transaction_history = []
         user.loan_count = 0
+        user.loan_balance = 0
 

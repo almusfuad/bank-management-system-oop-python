@@ -4,12 +4,12 @@ from user import User
 
 def main():
     # creating bank
-    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh')
+    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh', 10000)
     bank_operations = BankOperation(bank)
 
     # Creating admin
     admin = Admin(bank)
-    
+
     account_type = {
         1: 'savings',
         2: 'current',
@@ -73,22 +73,22 @@ def main():
             elif userChoice == 8:
                 resume = False
     elif choice == 2:
-        while resume:
-            print('\n')
-            print('Enter your password: ', end='')
-            password = str(input())
-            if admin.check_admin(password) == False:
-                print('Credential does not match.')
-            else:
-                print(f'1. Create an user \n2. Delete an user \n3. All user List \n4. Check bank balance \n5. Check total loan amount \n6. Loan features ON/OFF \n7.EXIT')
+        print('Enter your password: ', end='')
+        password = str(input())
+        if admin.check_admin(password) == False:
+            print('Credential does not match.')
+        else:
+            while resume:
+                print('\n')
+                print(f'1. Create an user \n2. Delete an user \n3. All user List \n4. Check bank balance \n5. Check total loan amount \n6. Loan features ON/OFF \n7. EXIT')
                 print(f'Choose an option: ', end='')
                 adminChoise = int(input())
                 if adminChoise == 1:
-                    print('Enter your name: ', end= "")
+                    print('Enter user name: ', end= "")
                     name = str(input())
-                    print('Enter your email: ', end= "")
+                    print('Enter user email: ', end= "")
                     email = str(input())
-                    print('Enter your address: ', end= '')
+                    print('Enter user address: ', end= '')
                     address = str(input())
                     print('1. Savings \n2. Current \nChoose account type: ', end='')
                     account_Op = int(input())
@@ -104,7 +104,8 @@ def main():
                 elif adminChoise == 5:
                     admin.total_loan_amount()
                 elif adminChoise == 6:
-                    print(f'1. Enable bank loan \n2.Disable bank loan', end='')
+                    print(f'1. Enable bank loan \n2. Disable bank loan')
+                    print(f'Choose an option: ', end='')
                     loan_op = int(input())
                     if loan_op == 1:
                         admin.enable_loan_feature()

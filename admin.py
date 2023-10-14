@@ -1,6 +1,7 @@
 class Admin:
     def __init__(admin, bank) -> None:
         admin.bank = bank
+        admin.__passkey = '1234'
 
     def create_acc(admin, user):
         return admin.bank.create_acc(user)
@@ -12,10 +13,10 @@ class Admin:
         admin.bank.all_users_acc()
 
     def total_bank_balance(admin):
-        return admin.total_bank_balance()
+        print(f'Total bank balance is: {admin.bank.total_bank_balance()}')
 
     def total_loan_amount(admin):
-        return admin.bank.total_loan_amount()
+        print(f'Total loan amount is: {admin.bank.total_loan_amount()}')
 
     def enable_loan_feature(admin):
         admin.bank.enable_loan_feature()
@@ -24,6 +25,6 @@ class Admin:
         admin.bank.disable_loan_feature()
 
     def check_admin(admin, password):
-        admin.__passkey = '1234'
         if password == admin.__passkey:
             return True
+        return False

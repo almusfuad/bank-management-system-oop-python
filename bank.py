@@ -2,10 +2,10 @@ import random
 from datetime import date
 
 class Bank:
-    def __init__(bank, name, address) -> None:
+    def __init__(bank, name, address, balance) -> None:
         bank.name = name
         bank.address = address
-        bank.init_balance = 1000000
+        bank.__init_balance = balance
         bank.users = {}
         bank.loan_enabled = True
 
@@ -16,6 +16,7 @@ class Bank:
         user.transaction_history = []
         user.load_count = 0
         bank.users[account_num] = user
+        print(f'Account number: {account_num} is created successfully')
         return account_num
 
     def delete_acc(bank, account_num):
@@ -30,17 +31,28 @@ class Bank:
             print(f'Account number: {acc_num}')
 
     def total_bank_balance(bank):
-        return bank.init_balance
+        total_balance = bank.__init_balance
+        for user in bank.users.values():
+            total_balance += user.balance
+        return total_balance
 
     def total_loan_amount(bank):
-        total_loans = sum(user.balance for user in bank.users.values() if user.balance < 0)
-        return abs(total_loans)
+        total_loans = 0
+        for user in bank.users.values():
+            total_loans += user.loan_balance
+            bank.total_balance -= total_loans
+        return total_loans
+        
 
     def enable_loan_feature(bank):
         bank.loan_enabled = True
+        if bank.loan_enabled:
+            print('Loan features is ON')
 
     def disable_loan_feature(bank):
         bank.loan_enabled = False
+        if bank.loan_enabled == False:
+            print('Loan features is OFF')
 
 
 # This class is for banking operation like deposit, withdraw, loaning, transferring
