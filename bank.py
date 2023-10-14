@@ -2,6 +2,7 @@ import random
 from datetime import date
 
 class Bank:
+    isBankrupt = False
     def __init__(bank, name, address, balance) -> None:
         bank.name = name
         bank.address = address
@@ -27,8 +28,11 @@ class Bank:
             print('Account does not exist.')
 
     def all_users_acc(bank):
-        for acc_num, user in bank.users.items():
-            print(f'Account number: {acc_num}')
+        if bank.users:
+            for acc_num, user in bank.users.items():
+                print(f'Account number: {acc_num}')
+        else:
+            print('No account find')
 
     def total_bank_balance(bank):
         for user in bank.users.values():
@@ -53,6 +57,10 @@ class Bank:
         if bank.loan_enabled == False:
             print('Loan features is OFF')
 
+    def __repr__(bank) -> str:
+        if bank.isBankrupt == True:
+            print('Bankrupt is enabled.')
+
 
 # This class is for banking operation like deposit, withdraw, loaning, transferring
 class BankOperation:
@@ -62,7 +70,7 @@ class BankOperation:
     def deposit(bank_op, account_num, amount):
         if account_num in bank_op.bank.users:
             user = bank_op.bank.users[account_num]
-            if amount > 100:
+            if amount > 0:
                 user.balance += amount
                 user.transaction_history.append(f'Deposit: {amount}')
                 print(f'Deposited {amount} into account {account_num}')
@@ -80,7 +88,7 @@ class BankOperation:
                 print(f'withdrawn {amount} from account {account_num}')
             elif amount > 0 and user.balance < amount:
                 print('Withdrawal amount exceeded.')
-            elif amount > 0 and bank_op.bank.balance <= user.balance:
+            elif amount > 0 and bank_op.bank.isBankrupt:
                 print('The bank is bankrupt')
             else:
                 print('Invalid withdrawal amount.')

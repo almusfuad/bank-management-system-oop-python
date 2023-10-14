@@ -4,7 +4,7 @@ from user import User
 
 def main():
     # creating bank
-    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh', -5000)
+    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh', 10000)
     bank_operations = BankOperation(bank)
 
     # Creating admin
@@ -80,7 +80,7 @@ def main():
         else:
             while resume:
                 print('\n')
-                print(f'1. Create an user \n2. Delete an user \n3. All user List \n4. Check bank balance \n5. Check total loan amount \n6. Loan features ON/OFF \n7. EXIT')
+                print(f'1. Create an user \n2. Delete an user \n3. All user List \n4. Check bank balance \n5. Check total loan amount \n6. Loan features ON/OFF \n7. Bankrupt \n8. EXIT')
                 print(f'Choose an option: ', end='')
                 adminChoise = int(input())
                 if adminChoise == 1:
@@ -112,6 +112,8 @@ def main():
                     elif loan_op == 2:
                         admin.disable_loan_feature()
                 elif adminChoise == 7:
+                    admin.bankrupt()
+                elif adminChoise == 8:
                     resume = False
 
 

@@ -28,3 +28,7 @@ class Admin:
         if password == admin.__passkey:
             return True
         return False
+
+    def bankrupt(admin):
+        print('Bankrupt is enabled.')
+        return admin.bank.isBankrupt == True
