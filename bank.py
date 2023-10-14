@@ -5,7 +5,7 @@ class Bank:
     def __init__(bank, name, address, balance) -> None:
         bank.name = name
         bank.address = address
-        bank.__init_balance = balance
+        bank.balance = balance
         bank.users = {}
         bank.loan_enabled = True
 
@@ -31,16 +31,15 @@ class Bank:
             print(f'Account number: {acc_num}')
 
     def total_bank_balance(bank):
-        total_balance = bank.__init_balance
         for user in bank.users.values():
-            total_balance += user.balance
-        return total_balance
+            bank.balance += user.balance
+        return bank.balance
 
     def total_loan_amount(bank):
         total_loans = 0
         for user in bank.users.values():
             total_loans += user.loan_balance
-            bank.total_balance -= total_loans
+            bank.balance -= user.loan_balnce
         return total_loans
         
 
@@ -75,14 +74,16 @@ class BankOperation:
     def withdraw(bank_op, account_num, amount):
         if account_num in bank_op.bank.users:
             user = bank_op.bank.users[account_num]
-            if amount > 100 and user.balance >= amount:
+            if amount > 0 and user.balance >= amount:
                 user.balance -= amount
                 user.transaction_history.append(f'Withdraw: -{amount}')
                 print(f'withdrawn {amount} from account {account_num}')
-            elif amount > 100 and user.balance < amount:
+            elif amount > 0 and user.balance < amount:
                 print('Withdrawal amount exceeded.')
+            elif amount > 0 and bank_op.bank.balance <= user.balance:
+                print('The bank is bankrupt')
             else:
-                print('Minimum withdrawal amount is 100')
+                print('Invalid withdrawal amount.')
         else:
             print('Account does not exist.')
 
@@ -90,13 +91,16 @@ class BankOperation:
         if account_num in bank_op.bank.users:
             user = bank_op.bank.users[account_num]
             if user.loan_count < 3 and bank_op.bank.loan_enabled:
-                if amount > 100:
+                if amount > 0:
                     user.balance += amount
+                    bank_op.bank.balance -= amount
                     user.transaction_history.append(f'Loan: +{amount}')
                     user.loan_count += 1
                     print(f'Loan of {amount} credited to account {account_num}.')
+                elif user.loan_count < 3 and bank_op.bank.balance <= amount:
+                    print('The bank is bankrupt')
                 else:
-                    print('Minimum Loan amount is 100')
+                    print('Invalid loan amount.')
             else:
                 print('Loan feature is disabled or maximum loan limit exceeded.')
         else:
@@ -106,16 +110,16 @@ class BankOperation:
         if sender_acc_num in bank_op.bank.users and receiver_acc_num in bank_op.bank.users:
             sender = bank_op.bank.users[sender_acc_num]
             receiver = bank_op.bank.users[receiver_acc_num]
-            if amount > 100 and sender.balance >= amount:
+            if amount > 0 and sender.balance >= amount:
                 sender.balance -= amount
                 receiver.balance += amount
                 sender.transaction_history.append(f'Transfer: -{amount} to {receiver_acc_num}')
                 receiver.transaction_history.append(f'Transfer: +{amount} from {sender_acc_num}')
                 print(f'Transferred {amount} from account {sender_acc_num} to account {receiver_acc_num}')
-            elif amount > 100 and sender.balance < amount:
+            elif amount > 0 and sender.balance < amount:
                 print('Insufficient balance for the transfer')
             else:
-                print('Minimum amount for transfer is 100')
+                print('Minimum amount for transfer is 0')
         else:
             print('One or both accounts do not exist.')
 

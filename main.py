@@ -4,7 +4,7 @@ from user import User
 
 def main():
     # creating bank
-    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh', 10000)
+    bank = Bank("Fokira Bank", 'Fokirpul, Bangladesh', -5000)
     bank_operations = BankOperation(bank)
 
     # Creating admin
