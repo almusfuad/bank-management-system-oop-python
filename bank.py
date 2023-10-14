@@ -1,4 +1,5 @@
 import random
+from datetime import date
 
 class Bank:
     def __init__(bank, name, address) -> None:
@@ -9,7 +10,7 @@ class Bank:
         bank.loan_enabled = True
 
     def create_acc(bank, user):
-        account_num = random.randint(10000, 9999)  # Generate a 4-digit account number
+        account_num = f'{date.today()}-{random.randint(1000, 9999)}'  # Generate a 4-digit account number
         user.account_number = account_num
         user.balance = 0
         user.transaction_history = []
@@ -105,3 +106,18 @@ class BankOperation:
                 print('Minimum amount for transfer is 100')
         else:
             print('One or both accounts do not exist.')
+
+    def check_available_balance(bank_op, account_num):
+        if account_num in bank_op.bank.users:
+            user = bank_op.bank.users[account_num]
+            print(f'{user.balance}')
+        else:
+            return 'Account does not exist'
+
+    def check_transaction_history(bank_op, account_num):
+        if account_num in bank_op.bank.users:
+            user = bank_op.bank.users[account_num]
+            for _ in user.transaction_history:
+                print(f'{_}')
+        else:
+            print('Account does not exist')

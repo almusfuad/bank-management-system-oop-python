@@ -22,3 +22,8 @@ class Admin:
 
     def disable_loan_feature(admin):
         admin.bank.disable_loan_feature()
+
+    def check_admin(admin, password):
+        admin.__passkey = '1234'
+        if password == admin.__passkey:
+            return True
