@@ -43,7 +43,6 @@ class Bank:
         total_loans = sum(user.loan_balance for user in bank.users.values())
         bank.balance -= total_loans
         return total_loans
-        
 
     def enable_loan_feature(bank):
         bank.loan_enabled = True
@@ -59,7 +58,6 @@ class Bank:
         bank.isBankrupt = True
         print('Bankrupt is enabled.')
 
-            
 
 
 # This class is for banking operation like deposit, withdraw, loaning, transferring
@@ -82,7 +80,7 @@ class BankOperation:
     def withdraw(bank_op, account_num, amount):
         if account_num in bank_op.bank.users:
             user = bank_op.bank.users[account_num]
-            if amount > 0 and bank_op.bank.check_bankrupt():
+            if amount > 0 and bank_op.bank.isBankrupt:
                 print('The bank is bankrupt')
             else:
                 if amount > 0 and user.balance >= amount:
